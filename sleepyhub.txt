@@ -1,0 +1,1095 @@
+-- Project Baki script made by drki#8312
+
+
+
+
+-- Variables
+
+local KillAuraTarget = "name"
+
+
+
+-- Getgenv's
+
+getgenv().SpecifiedKillAura = false;
+getgenv().KiyosumiKatoFarm = false;
+getgenv().YashaApeFarm = false;
+getgenv().StreetThugFarm = false;
+getgenv().StreetThugQuest = false;
+getgenv().bginfmana = false;
+
+
+
+
+-- TP function
+
+function getCurrentPlayerPOS() -- get player position
+    local plyr = game.Players.LocalPlayer;
+    if plyr.Character then
+        return plyr.Character.HumainoidRootPart.Position;
+    end
+        return false;
+end
+
+function teleportTO(placeCFrame) -- teleport to place
+        local plyr = game.Players.LocalPlayer;
+    if plyr.Character then
+        plyr.Character.HumanoidRootPart.CFrame = placeCFrame;
+    end
+end
+
+function teleportToKato() -- teleport to place
+        teleportTO(game:GetService("Workspace").Game.Players["Kiyosumi Kato"].HumanoidRootPart.CFrame)
+end
+
+function teleportToYasha() -- teleport to place
+    teleportTO(game:GetService("Workspace").Game.Players["Yasha Ape"].HumanoidRootPart.CFrame)
+end
+
+function teleportToSThug() -- teleport to place
+        teleportTO(workspace.Game.Players:FindFirstChild("Street Thug").HumanoidRootPart.CFrame)
+end
+
+
+-- Functions
+
+function doAFKFarmOn()
+    spawn(function()
+        local args = {[1] = true}
+        game:GetService("ReplicatedStorage").Remotes.ClientToServer.AFK:InvokeServer(unpack(args))
+    end)
+end
+
+function doAFKFarmOff()
+    spawn(function()
+        local args = {[1] = false}
+        game:GetService("ReplicatedStorage").Remotes.ClientToServer.AFK:InvokeServer(unpack(args))
+    end)
+end
+
+function doPullUp()
+    spawn(function()
+        local args = {[1] = workspace.Game.Training:FindFirstChild("Pullup Bar")}
+        game:GetService("ReplicatedStorage").Remotes.ClientToServer.Train:InvokeServer(unpack(args))
+
+    end)
+end
+
+function doMembership()
+    spawn(function()
+        local args = {[1] = workspace.Game.Shop.Gym:FindFirstChild("Membership Ticket")}
+        game:GetService("ReplicatedStorage").Remotes.ClientToServer.Shop:InvokeServer(unpack(args))
+    end)
+end
+
+function doRestCash()
+    spawn(function()
+        local args = {[1] = workspace.Game.Jobs:FindFirstChild("Restaurant Cashier")}
+        game:GetService("ReplicatedStorage").Remotes.ClientToServer.Job:InvokeServer(unpack(args))
+    end)
+end
+
+function doSpecifiedKillAura()
+    spawn(function()
+        while getgenv().SpecifiedKillAura == true do
+            local args = {
+                [1] = "LightPunch",
+                [2] = 1,
+                [3] = game:GetService("Players")[KillAuraTarget].Character.Humanoid
+            }
+            game:GetService("ReplicatedStorage").Remotes.ClientToServer.BasicCombat:FireServer(unpack(args))
+            teleportTO(game:GetService("Players")[KillAuraTarget].Character.HumanoidRootPart.CFrame)
+            wait(0.1)
+        end
+    end)
+end
+
+function doKato()
+    spawn(function()
+        while getgenv().KiyosumiKatoFarm == true do
+            local args = {
+                [1] = "LightPunch",
+                [2] = 1,
+                [3] = workspace.Game.Players:FindFirstChild("Kiyosumi Kato").Humanoid
+            }
+            game:GetService("ReplicatedStorage").Remotes.ClientToServer.BasicCombat:FireServer(unpack(args))
+            wait(0.2)
+            teleportToKato()
+        end
+    end)
+end
+
+function doYasha()
+    spawn(function()
+        while getgenv().YashaApeFarm == true do
+            local args = {
+                [1] = "LightPunch",
+                [2] = 1,
+                [3] = workspace.Game.Players:FindFirstChild("Yasha Ape").Humanoid
+            }
+            game:GetService("ReplicatedStorage").Remotes.ClientToServer.BasicCombat:FireServer(unpack(args))
+            teleportToYasha()
+            wait(0.2)
+        end
+    end)
+end
+
+function doSThug()
+    spawn(function()
+        while getgenv().StreetThugFarm == true do
+            local args = {
+            [1] = "LightPunch",
+            [2] = 1,
+            [3] = workspace.Game.Players:FindFirstChild("Street Thug").Humanoid}
+            game:GetService("ReplicatedStorage").Remotes.ClientToServer.BasicCombat:FireServer(unpack(args))
+            teleportToSThug()
+            wait(0.2)
+        end
+    end)
+end
+
+function doThugQuest()
+    spawn (function()
+        while getgenv().StreetThugQuest == true do
+            local args = {
+            [1] = "Street Thugs 1", 
+            [2] = "Request"}
+            game:GetService("ReplicatedStorage").Remotes.ClientToServer.QuestRemote:FireServer(unpack(args))
+            wait(10)
+        end
+    end)
+end
+
+function doSopaDeMacaco()
+    spawn(function()
+    	local args = {[1] = workspace.Game.Shop.Restaurant:FindFirstChild("Sopa de Macaco")}
+	    game:GetService("ReplicatedStorage").Remotes.ClientToServer.Shop:InvokeServer(unpack(args))
+    end)
+end
+
+function doProteinShake()
+    spawn(function()
+            local args = {[1] = workspace.Game.Shop.Other:FindFirstChild("Protein Shake")}
+	game:GetService("ReplicatedStorage").Remotes.ClientToServer.Shop:InvokeServer(unpack(args))
+    end)
+end
+
+function doNoodleBowl()
+    spawn(function()
+        local args = {[1] = workspace.Game.Shop.Restaurant:FindFirstChild("Noodle Bowl")}	
+	    game:GetService("ReplicatedStorage").Remotes.ClientToServer.Shop:InvokeServer(unpack(args))
+    end)
+end
+
+function doBGInfMana()
+    spawn(function()
+        while getgenv().bginfmana == true do
+            local args = {
+                [1] = 30,
+                [2] = "MANN4",
+                [3] = 185,
+                [4] = 30}
+            game:GetService("ReplicatedStorage").RegenMyManaPls:FireServer(unpack(args))
+            wait()
+        end
+    end)
+end
+
+
+
+-- GUI
+
+-- Instances:
+
+local Sleepyhub = Instance.new("ScreenGui")
+local Main = Instance.new("Frame")
+local Background = Instance.new("Frame")
+local Topbar = Instance.new("Frame")
+local Title = Instance.new("TextLabel")
+local GamesBut = Instance.new("TextButton")
+local Square1GameBut = Instance.new("Frame")
+local Square2GameBut = Instance.new("Frame")
+local Square3GameBut = Instance.new("Frame")
+local Square4GameBut = Instance.new("Frame")
+local MinimizeWindow = Instance.new("TextButton")
+local GamesTab = Instance.new("Frame")
+local ProjectBaki2 = Instance.new("TextButton")
+local Comingsoon = Instance.new("TextButton")
+local Comingsoon_2 = Instance.new("TextButton")
+local Comingsoon_3 = Instance.new("TextButton")
+local BlackGrimoire = Instance.new("TextButton")
+local Comingsoon_4 = Instance.new("TextButton")
+local Comingsoon_5 = Instance.new("TextButton")
+local Other = Instance.new("TextButton")
+local Tabs = Instance.new("Frame")
+local PB2 = Instance.new("Frame")
+local PB2SKname = Instance.new("TextBox")
+local PB2SKoff = Instance.new("TextButton")
+local PB2SKon = Instance.new("TextButton")
+local SKLabel = Instance.new("TextLabel")
+local PB2FarmGUI = Instance.new("TextButton")
+local PB2ShopGUI = Instance.new("TextButton")
+local ComingSoonTab1 = Instance.new("Frame")
+local ComingSoonTab2 = Instance.new("Frame")
+local ComingSoonTab3 = Instance.new("Frame")
+local ComingSoonTab4 = Instance.new("Frame")
+local ComingSoonTab5 = Instance.new("Frame")
+local BG = Instance.new("Frame")
+local BGInfManaLabel = Instance.new("TextLabel")
+local BGInfManaOn = Instance.new("TextButton")
+local BGInfManaOff = Instance.new("TextButton")
+local PB2ShopGui = Instance.new("Frame")
+local ShopGUImain = Instance.new("Frame")
+local BMembership = Instance.new("TextButton")
+local BSopaDeMachaco = Instance.new("TextButton")
+local BProteinShake = Instance.new("TextButton")
+local BSoupBowl = Instance.new("TextButton")
+local ShopGUItopbar = Instance.new("Frame")
+local ShopGUITitle = Instance.new("TextLabel")
+local CloseShopBut = Instance.new("TextButton")
+local LoadGui = Instance.new("Frame")
+local LoadGuiBackground = Instance.new("ImageLabel")
+local LoadGUITitle = Instance.new("TextLabel")
+local LoadGUIKeyBox = Instance.new("TextBox")
+local TextBox_Roundify_13px = Instance.new("ImageLabel")
+local InputKey = Instance.new("TextButton")
+local TextButton_Roundify_13px = Instance.new("ImageLabel")
+local CodeLink = Instance.new("TextLabel")
+local Minimized = Instance.new("Frame")
+local MinimizedBackground = Instance.new("ImageLabel")
+local MaximizeWindow = Instance.new("TextButton")
+local PB2FarmGui = Instance.new("Frame")
+local PB2FarmGUItopbar = Instance.new("Frame")
+local FarmGUITitle = Instance.new("TextLabel")
+local CloseFarmBut = Instance.new("TextButton")
+local PB2FarmGUImain = Instance.new("Frame")
+local YashaFarmOn = Instance.new("TextButton")
+local YashaFarmOff = Instance.new("TextButton")
+local KatoFarmOn = Instance.new("TextButton")
+local KatoFarmOff = Instance.new("TextButton")
+local KatoFarmLabel = Instance.new("TextLabel")
+local ThugFarmOn = Instance.new("TextButton")
+local ThugFarmOff = Instance.new("TextButton")
+local YashaFarmLabel = Instance.new("TextLabel")
+local ThugFarmLabel = Instance.new("TextLabel")
+
+--Properties:
+
+Sleepyhub.Name = "Sleepyhub"
+Sleepyhub.Parent = game.CoreGui
+
+Main.Name = "Main"
+Main.Parent = Sleepyhub
+Main.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Main.BackgroundTransparency = 1.000
+Main.Position = UDim2.new(0.279708982, 0, 0.197860956, 0)
+Main.Size = UDim2.new(0, 454, 0, 293)
+Main.Visible = false
+
+Background.Name = "Background"
+Background.Parent = Main
+Background.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+Background.Size = UDim2.new(0, 454, 0, 293)
+
+Topbar.Name = "Topbar"
+Topbar.Parent = Main
+Topbar.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+Topbar.Size = UDim2.new(0, 454, 0, 62)
+
+Title.Name = "Title"
+Title.Parent = Topbar
+Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Title.BackgroundTransparency = 1.000
+Title.Position = UDim2.new(0.200440526, 0, 0.0967741907, 0)
+Title.Size = UDim2.new(0, 272, 0, 50)
+Title.Font = Enum.Font.SourceSans
+Title.Text = "Sleepy Hub"
+Title.TextColor3 = Color3.fromRGB(138, 138, 255)
+Title.TextSize = 63.000
+
+GamesBut.Name = "GamesBut"
+GamesBut.Parent = Topbar
+GamesBut.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+GamesBut.BorderColor3 = Color3.fromRGB(138, 138, 255)
+GamesBut.BorderSizePixel = 3
+GamesBut.Position = UDim2.new(0.0374449342, 0, 0.241935477, 0)
+GamesBut.Size = UDim2.new(0, 34, 0, 34)
+GamesBut.Font = Enum.Font.SourceSans
+GamesBut.Text = ""
+GamesBut.TextColor3 = Color3.fromRGB(0, 0, 0)
+GamesBut.TextSize = 14.000
+
+Square1GameBut.Name = "Square1GameBut"
+Square1GameBut.Parent = GamesBut
+Square1GameBut.BackgroundColor3 = Color3.fromRGB(138, 138, 255)
+Square1GameBut.Position = UDim2.new(0.117365658, 0, 0.140672475, 0)
+Square1GameBut.Size = UDim2.new(0, 11, 0, 11)
+
+Square2GameBut.Name = "Square2GameBut"
+Square2GameBut.Parent = GamesBut
+Square2GameBut.BackgroundColor3 = Color3.fromRGB(138, 138, 255)
+Square2GameBut.Position = UDim2.new(0.56668359, 0, 0.548863232, 0)
+Square2GameBut.Size = UDim2.new(0, 11, 0, 11)
+
+Square3GameBut.Name = "Square3GameBut"
+Square3GameBut.Parent = GamesBut
+Square3GameBut.BackgroundColor3 = Color3.fromRGB(138, 138, 255)
+Square3GameBut.Position = UDim2.new(0.117234819, 0, 0.551057696, 0)
+Square3GameBut.Size = UDim2.new(0, 11, 0, 11)
+
+Square4GameBut.Name = "Square4GameBut"
+Square4GameBut.Parent = GamesBut
+Square4GameBut.BackgroundColor3 = Color3.fromRGB(138, 138, 255)
+Square4GameBut.Position = UDim2.new(0.565333784, 0, 0.138268679, 0)
+Square4GameBut.Size = UDim2.new(0, 11, 0, 11)
+
+MinimizeWindow.Name = "MinimizeWindow"
+MinimizeWindow.Parent = Topbar
+MinimizeWindow.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+MinimizeWindow.BorderColor3 = Color3.fromRGB(138, 138, 255)
+MinimizeWindow.BorderSizePixel = 2
+MinimizeWindow.Position = UDim2.new(0.925110161, 0, 0.0967741907, 0)
+MinimizeWindow.Size = UDim2.new(0, 20, 0, 20)
+MinimizeWindow.Font = Enum.Font.SourceSans
+MinimizeWindow.Text = "X"
+MinimizeWindow.TextColor3 = Color3.fromRGB(138, 138, 255)
+MinimizeWindow.TextSize = 14.000
+MinimizeWindow.MouseButton1Click:Connect(function()
+	Main.Visible = false
+    Minimized.Visible = true
+    Minimized.Active = true
+end)
+
+GamesTab.Name = "Games Tab"
+GamesTab.Parent = Main
+GamesTab.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+GamesTab.BorderColor3 = Color3.fromRGB(138, 138, 255)
+GamesTab.BorderSizePixel = 3
+GamesTab.Position = UDim2.new(0, 0, 0.211604089, 0)
+GamesTab.Size = UDim2.new(0, 108, 0, 231)
+
+ProjectBaki2.Name = "Project Baki 2"
+ProjectBaki2.Parent = GamesTab
+ProjectBaki2.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+ProjectBaki2.BorderColor3 = Color3.fromRGB(138, 138, 255)
+ProjectBaki2.Position = UDim2.new(0.0982510597, 0, 0.0425029285, 0)
+ProjectBaki2.Size = UDim2.new(0, 81, 0, 15)
+ProjectBaki2.Font = Enum.Font.SourceSans
+ProjectBaki2.Text = "Project Baki 2"
+ProjectBaki2.TextColor3 = Color3.fromRGB(138, 138, 255)
+ProjectBaki2.TextSize = 14.000
+ProjectBaki2.MouseButton1Click:Connect(function()
+        BG.Visible = false
+        ComingSoonTab1.Visible = false
+        ComingSoonTab2.Visible = false
+        ComingSoonTab3.Visible = false
+        ComingSoonTab4.Visible = false
+        ComingSoonTab5.Visible = false
+        PB2.Visible = true
+end)
+
+Comingsoon.Name = "Coming soon"
+Comingsoon.Parent = GamesTab
+Comingsoon.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+Comingsoon.BorderColor3 = Color3.fromRGB(138, 138, 255)
+Comingsoon.Position = UDim2.new(0.0982510597, 0, 0.453758359, 0)
+Comingsoon.Size = UDim2.new(0, 81, 0, 15)
+Comingsoon.Font = Enum.Font.SourceSans
+Comingsoon.Text = "Coming soon"
+Comingsoon.TextColor3 = Color3.fromRGB(138, 138, 255)
+Comingsoon.TextSize = 14.000
+
+Comingsoon_2.Name = "Coming soon"
+Comingsoon_2.Parent = GamesTab
+Comingsoon_2.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+Comingsoon_2.BorderColor3 = Color3.fromRGB(138, 138, 255)
+Comingsoon_2.Position = UDim2.new(0.0982510597, 0, 0.349862248, 0)
+Comingsoon_2.Size = UDim2.new(0, 81, 0, 15)
+Comingsoon_2.Font = Enum.Font.SourceSans
+Comingsoon_2.Text = "Coming soon"
+Comingsoon_2.TextColor3 = Color3.fromRGB(138, 138, 255)
+Comingsoon_2.TextSize = 14.000
+
+Comingsoon_3.Name = "Coming soon"
+Comingsoon_3.Parent = GamesTab
+Comingsoon_3.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+Comingsoon_3.BorderColor3 = Color3.fromRGB(138, 138, 255)
+Comingsoon_3.Position = UDim2.new(0.0982510597, 0, 0.250295132, 0)
+Comingsoon_3.Size = UDim2.new(0, 81, 0, 15)
+Comingsoon_3.Font = Enum.Font.SourceSans
+Comingsoon_3.Text = "Coming soon"
+Comingsoon_3.TextColor3 = Color3.fromRGB(138, 138, 255)
+Comingsoon_3.TextSize = 14.000
+
+BlackGrimoire.Name = "Black Grimoire"
+BlackGrimoire.Parent = GamesTab
+BlackGrimoire.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+BlackGrimoire.BorderColor3 = Color3.fromRGB(138, 138, 255)
+BlackGrimoire.Position = UDim2.new(0.0982510597, 0, 0.142070025, 0)
+BlackGrimoire.Size = UDim2.new(0, 81, 0, 15)
+BlackGrimoire.Font = Enum.Font.SourceSans
+BlackGrimoire.Text = "Black Grimoire"
+BlackGrimoire.TextColor3 = Color3.fromRGB(138, 138, 255)
+BlackGrimoire.TextSize = 14.000
+BlackGrimoire.MouseButton1Click:Connect(function()
+    BG.Visible = true
+    ComingSoonTab1.Visible = false
+    ComingSoonTab2.Visible = false
+    ComingSoonTab3.Visible = false
+    ComingSoonTab4.Visible = false
+    ComingSoonTab5.Visible = false
+    PB2.Visible = false
+end)
+
+Comingsoon_4.Name = "Coming soon"
+Comingsoon_4.Parent = GamesTab
+Comingsoon_4.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+Comingsoon_4.BorderColor3 = Color3.fromRGB(138, 138, 255)
+Comingsoon_4.Position = UDim2.new(0.0982510597, 0, 0.553325474, 0)
+Comingsoon_4.Size = UDim2.new(0, 81, 0, 15)
+Comingsoon_4.Font = Enum.Font.SourceSans
+Comingsoon_4.Text = "Coming soon"
+Comingsoon_4.TextColor3 = Color3.fromRGB(138, 138, 255)
+Comingsoon_4.TextSize = 14.000
+
+Other.Name = "Other"
+Other.Parent = GamesTab
+Other.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+Other.BorderColor3 = Color3.fromRGB(138, 138, 255)
+Other.Position = UDim2.new(0.0982510597, 0, 0.860684752, 0)
+Other.Size = UDim2.new(0, 81, 0, 15)
+Other.Font = Enum.Font.SourceSans
+Other.Text = "Other"
+Other.TextColor3 = Color3.fromRGB(138, 138, 255)
+Other.TextSize = 14.000
+
+Comingsoon_5.Name = "Coming soon"
+Comingsoon_5.Parent = GamesTab
+Comingsoon_5.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+Comingsoon_5.BorderColor3 = Color3.fromRGB(138, 138, 255)
+Comingsoon_5.Position = UDim2.new(0.0982510597, 0, 0.65289259, 0)
+Comingsoon_5.Size = UDim2.new(0, 81, 0, 15)
+Comingsoon_5.Font = Enum.Font.SourceSans
+Comingsoon_5.Text = "Coming soon"
+Comingsoon_5.TextColor3 = Color3.fromRGB(138, 138, 255)
+Comingsoon_5.TextSize = 14.000
+
+Tabs.Name = "Tabs"
+Tabs.Parent = Main
+Tabs.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Tabs.BackgroundTransparency = 1.000
+Tabs.Position = UDim2.new(0.270925105, 0, 0.252559721, 0)
+Tabs.Size = UDim2.new(0, 319, 0, 208)
+
+PB2.Name = "PB2"
+PB2.Parent = Tabs
+PB2.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+PB2.BorderColor3 = Color3.fromRGB(138, 138, 255)
+PB2.BorderSizePixel = 3
+PB2.Position = UDim2.new(-0.00313479616, 0, 0, 0)
+PB2.Size = UDim2.new(0, 318, 0, 208)
+
+PB2SKname.Name = "PB2SKname"
+PB2SKname.Parent = PB2
+PB2SKname.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+PB2SKname.Position = UDim2.new(0.511342764, 0, 0.139415443, 0)
+PB2SKname.Size = UDim2.new(0, 132, 0, 28)
+PB2SKname.Font = Enum.Font.SourceSans
+PB2SKname.Text = "Spam Kill Name"
+PB2SKname.TextColor3 = Color3.fromRGB(138, 138, 255)
+PB2SKname.TextSize = 14.000
+
+PB2SKoff.Name = "PB2SKoff"
+PB2SKoff.Parent = PB2
+PB2SKoff.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+PB2SKoff.BorderColor3 = Color3.fromRGB(138, 138, 255)
+PB2SKoff.BorderSizePixel = 2
+PB2SKoff.Position = UDim2.new(0.732202888, 0, 0.332925051, 0)
+PB2SKoff.Size = UDim2.new(0, 60, 0, 26)
+PB2SKoff.Font = Enum.Font.SourceSans
+PB2SKoff.Text = "Off"
+PB2SKoff.TextColor3 = Color3.fromRGB(138, 138, 255)
+PB2SKoff.TextSize = 14.000
+PB2SKoff.MouseButton1Click:Connect(function()
+    KillAuraTarget = PB2SKname.Text
+        if game:GetService("Players")[KillAuraTarget].Character.Humanoid then
+            getgenv().SpecifiedKillAura = false;
+            doSpecifiedKillAura()
+        end
+end)
+
+PB2SKon.Name = "PB2SKon"
+PB2SKon.Parent = PB2
+PB2SKon.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+PB2SKon.BorderColor3 = Color3.fromRGB(138, 138, 255)
+PB2SKon.BorderSizePixel = 2
+PB2SKon.Position = UDim2.new(0.508190811, 0, 0.3329252, 0)
+PB2SKon.Size = UDim2.new(0, 60, 0, 26)
+PB2SKon.Font = Enum.Font.SourceSans
+PB2SKon.Text = "On"
+PB2SKon.TextColor3 = Color3.fromRGB(138, 138, 255)
+PB2SKon.TextSize = 14.000
+PB2SKon.MouseButton1Click:Connect(function()
+    KillAuraTarget = PB2SKname.Text
+        if game:GetService("Players")[KillAuraTarget].Character.Humanoid then
+            getgenv().SpecifiedKillAura = true;
+            doSpecifiedKillAura()
+        end
+end)
+
+SKLabel.Name = "SKLabel"
+SKLabel.Parent = PB2
+SKLabel.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+SKLabel.BackgroundTransparency = 1.000
+SKLabel.Position = UDim2.new(0.511235833, 0, 0.0283291154, 0)
+SKLabel.Size = UDim2.new(0, 131, 0, 18)
+SKLabel.Font = Enum.Font.SourceSans
+SKLabel.Text = "Spam Kill"
+SKLabel.TextColor3 = Color3.fromRGB(138, 138, 255)
+SKLabel.TextSize = 14.000
+
+PB2FarmGUI.Name = "PB2FarmGUI"
+PB2FarmGUI.Parent = PB2
+PB2FarmGUI.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+PB2FarmGUI.BorderColor3 = Color3.fromRGB(138, 138, 255)
+PB2FarmGUI.BorderSizePixel = 2
+PB2FarmGUI.Position = UDim2.new(0.0956681892, 0, 0.13500081, 0)
+PB2FarmGUI.Size = UDim2.new(0, 121, 0, 28)
+PB2FarmGUI.Font = Enum.Font.SourceSans
+PB2FarmGUI.Text = "Farm GUI"
+PB2FarmGUI.TextColor3 = Color3.fromRGB(138, 138, 255)
+PB2FarmGUI.TextSize = 14.000
+PB2FarmGUI.MouseButton1Click:Connect(function()
+    PB2FarmGui.Visible = true
+end)
+
+PB2ShopGUI.Name = "PB2ShopGUI"
+PB2ShopGUI.Parent = PB2
+PB2ShopGUI.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+PB2ShopGUI.BorderColor3 = Color3.fromRGB(138, 138, 255)
+PB2ShopGUI.BorderSizePixel = 2
+PB2ShopGUI.Position = UDim2.new(0.0931933895, 0, 0.322500825, 0)
+PB2ShopGUI.Size = UDim2.new(0, 121, 0, 28)
+PB2ShopGUI.Font = Enum.Font.SourceSans
+PB2ShopGUI.Text = "Shop GUI"
+PB2ShopGUI.TextColor3 = Color3.fromRGB(138, 138, 255)
+PB2ShopGUI.TextSize = 14.000
+PB2ShopGUI.MouseButton1Click:Connect(function()
+    PB2ShopGui.Visible = true
+end)
+
+ComingSoonTab1.Name = "ComingSoonTab1"
+ComingSoonTab1.Parent = Tabs
+ComingSoonTab1.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+ComingSoonTab1.BorderColor3 = Color3.fromRGB(138, 138, 255)
+ComingSoonTab1.BorderSizePixel = 3
+ComingSoonTab1.Position = UDim2.new(-0.00313479616, 0, 0, 0)
+ComingSoonTab1.Size = UDim2.new(0, 318, 0, 208)
+ComingSoonTab1.Visible = false
+
+ComingSoonTab2.Name = "ComingSoonTab2"
+ComingSoonTab2.Parent = Tabs
+ComingSoonTab2.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+ComingSoonTab2.BorderColor3 = Color3.fromRGB(138, 138, 255)
+ComingSoonTab2.BorderSizePixel = 3
+ComingSoonTab2.Position = UDim2.new(-0.00313479616, 0, 0, 0)
+ComingSoonTab2.Size = UDim2.new(0, 318, 0, 208)
+ComingSoonTab2.Visible = false
+
+ComingSoonTab3.Name = "ComingSoonTab3"
+ComingSoonTab3.Parent = Tabs
+ComingSoonTab3.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+ComingSoonTab3.BorderColor3 = Color3.fromRGB(138, 138, 255)
+ComingSoonTab3.BorderSizePixel = 3
+ComingSoonTab3.Position = UDim2.new(-0.00313479616, 0, 0, 0)
+ComingSoonTab3.Size = UDim2.new(0, 318, 0, 208)
+ComingSoonTab3.Visible = false
+
+ComingSoonTab4.Name = "ComingSoonTab4"
+ComingSoonTab4.Parent = Tabs
+ComingSoonTab4.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+ComingSoonTab4.BorderColor3 = Color3.fromRGB(138, 138, 255)
+ComingSoonTab4.BorderSizePixel = 3
+ComingSoonTab4.Position = UDim2.new(-0.00313479616, 0, 0, 0)
+ComingSoonTab4.Size = UDim2.new(0, 318, 0, 208)
+ComingSoonTab4.Visible = false
+
+ComingSoonTab5.Name = "ComingSoonTab5"
+ComingSoonTab5.Parent = Tabs
+ComingSoonTab5.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+ComingSoonTab5.BorderColor3 = Color3.fromRGB(138, 138, 255)
+ComingSoonTab5.BorderSizePixel = 3
+ComingSoonTab5.Position = UDim2.new(-0.00313479616, 0, 0, 0)
+ComingSoonTab5.Size = UDim2.new(0, 318, 0, 208)
+ComingSoonTab5.Visible = false
+
+BG.Name = "BG"
+BG.Parent = Tabs
+BG.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+BG.BorderColor3 = Color3.fromRGB(138, 138, 255)
+BG.BorderSizePixel = 3
+BG.Position = UDim2.new(0, 0, 0.00480769249, 0)
+BG.Size = UDim2.new(0, 318, 0, 208)
+
+BGInfManaLabel.Name = "BGInfManaLabel"
+BGInfManaLabel.Parent = BG
+BGInfManaLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+BGInfManaLabel.BackgroundTransparency = 1.000
+BGInfManaLabel.Position = UDim2.new(0.0420967899, 0, 0.0498566255, 0)
+BGInfManaLabel.Size = UDim2.new(0, 94, 0, 11)
+BGInfManaLabel.Font = Enum.Font.SourceSans
+BGInfManaLabel.Text = "Inf Mana"
+BGInfManaLabel.TextColor3 = Color3.fromRGB(138, 138, 255)
+BGInfManaLabel.TextSize = 14.000
+
+BGInfManaOn.Name = "BGInfManaOn"
+BGInfManaOn.Parent = BG
+BGInfManaOn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+BGInfManaOn.BorderColor3 = Color3.fromRGB(138, 138, 255)
+BGInfManaOn.BorderSizePixel = 2
+BGInfManaOn.Position = UDim2.new(0.0452116951, 0, 0.135146946, 0)
+BGInfManaOn.Size = UDim2.new(0, 37, 0, 18)
+BGInfManaOn.Font = Enum.Font.SourceSans
+BGInfManaOn.Text = "On"
+BGInfManaOn.TextColor3 = Color3.fromRGB(138, 138, 255)
+BGInfManaOn.TextSize = 14.000
+BGInfManaOn.MouseButton1Click:Connect(function()
+    getgenv().bginfmana = true
+    print("Black Grimoire: Infinite Mana has turned On")
+        if getgenv().bginfmana == true then
+            doBGInfMana()
+        end
+end)
+
+BGInfManaOff.Name = "BGInfManaOff"
+BGInfManaOff.Parent = BG
+BGInfManaOff.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+BGInfManaOff.BorderColor3 = Color3.fromRGB(138, 138, 255)
+BGInfManaOff.BorderSizePixel = 2
+BGInfManaOff.Position = UDim2.new(0.221312314, 0, 0.135146946, 0)
+BGInfManaOff.Size = UDim2.new(0, 37, 0, 18)
+BGInfManaOff.Font = Enum.Font.SourceSans
+BGInfManaOff.Text = "Off"
+BGInfManaOff.TextColor3 = Color3.fromRGB(138, 138, 255)
+BGInfManaOff.TextSize = 14.000
+BGInfManaOff.MouseButton1Click:Connect(function()
+    getgenv().bginfmana = false
+end)
+
+PB2ShopGui.Name = "PB2ShopGUI"
+PB2ShopGui.Parent = Sleepyhub
+PB2ShopGui.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+PB2ShopGui.BackgroundTransparency = 1.000
+PB2ShopGui.Position = UDim2.new(0, 0, 0.152404517, 0)
+PB2ShopGui.Size = UDim2.new(0, 209, 0, 568)
+PB2ShopGui.Visible = false
+
+ShopGUImain.Name = "ShopGUImain"
+ShopGUImain.Parent = PB2ShopGui
+ShopGUImain.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+ShopGUImain.Size = UDim2.new(0, 209, 0, 568)
+
+BMembership.Name = "BMembership"
+BMembership.Parent = ShopGUImain
+BMembership.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+BMembership.BorderColor3 = Color3.fromRGB(138, 138, 255)
+BMembership.BorderSizePixel = 2
+BMembership.Position = UDim2.new(0.0191387553, 0, 0.110915489, 0)
+BMembership.Size = UDim2.new(0, 200, 0, 28)
+BMembership.Font = Enum.Font.SourceSans
+BMembership.Text = "Buy Membership"
+BMembership.TextColor3 = Color3.fromRGB(138, 138, 255)
+BMembership.TextSize = 21.000
+BMembership.MouseButton1Click:Connect(function()
+    doMembership()
+end)
+
+BSopaDeMachaco.Name = "BSopaDeMachaco"
+BSopaDeMachaco.Parent = ShopGUImain
+BSopaDeMachaco.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+BSopaDeMachaco.BorderColor3 = Color3.fromRGB(138, 138, 255)
+BSopaDeMachaco.BorderSizePixel = 2
+BSopaDeMachaco.Position = UDim2.new(0.0191387553, 0, 0.278169006, 0)
+BSopaDeMachaco.Size = UDim2.new(0, 200, 0, 28)
+BSopaDeMachaco.Font = Enum.Font.SourceSans
+BSopaDeMachaco.Text = "Buy Sopa de Machaco"
+BSopaDeMachaco.TextColor3 = Color3.fromRGB(138, 138, 255)
+BSopaDeMachaco.TextSize = 21.000
+BSopaDeMachaco.MouseButton1Click:Connect(function()
+    doSopaDeMacaco()
+end)
+
+BProteinShake.Name = "BProteinShake"
+BProteinShake.Parent = ShopGUImain
+BProteinShake.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+BProteinShake.BorderColor3 = Color3.fromRGB(138, 138, 255)
+BProteinShake.BorderSizePixel = 2
+BProteinShake.Position = UDim2.new(0.0191387553, 0, 0.221830979, 0)
+BProteinShake.Size = UDim2.new(0, 200, 0, 28)
+BProteinShake.Font = Enum.Font.SourceSans
+BProteinShake.Text = "Buy Protein Shake"
+BProteinShake.TextColor3 = Color3.fromRGB(138, 138, 255)
+BProteinShake.TextSize = 21.000
+BProteinShake.MouseButton1Click:Connect(function()
+    doProteinShake()
+end)
+
+BSoupBowl.Name = "BSoupBowl"
+BSoupBowl.Parent = ShopGUImain
+BSoupBowl.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+BSoupBowl.BorderColor3 = Color3.fromRGB(138, 138, 255)
+BSoupBowl.BorderSizePixel = 2
+BSoupBowl.Position = UDim2.new(0.0191387553, 0, 0.167253524, 0)
+BSoupBowl.Size = UDim2.new(0, 200, 0, 28)
+BSoupBowl.Font = Enum.Font.SourceSans
+BSoupBowl.Text = "Buy Soup Bowl"
+BSoupBowl.TextColor3 = Color3.fromRGB(138, 138, 255)
+BSoupBowl.TextSize = 21.000
+BSoupBowl.MouseButton1Click:Connect(function()
+    doNoodleBowl()
+end)
+
+ShopGUItopbar.Name = "ShopGUItopbar"
+ShopGUItopbar.Parent = PB2ShopGui
+ShopGUItopbar.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+ShopGUItopbar.Size = UDim2.new(0, 209, 0, 57)
+
+ShopGUITitle.Name = "ShopGUITitle"
+ShopGUITitle.Parent = ShopGUItopbar
+ShopGUITitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ShopGUITitle.BackgroundTransparency = 1.000
+ShopGUITitle.Position = UDim2.new(0, 0, -0.0350877196, 0)
+ShopGUITitle.Size = UDim2.new(0, 209, 0, 59)
+ShopGUITitle.Font = Enum.Font.SourceSans
+ShopGUITitle.Text = "Project Baki Shop"
+ShopGUITitle.TextColor3 = Color3.fromRGB(138, 138, 255)
+ShopGUITitle.TextSize = 31.000
+
+CloseShopBut.Name = "CloseShopBut"
+CloseShopBut.Parent = ShopGUItopbar
+CloseShopBut.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+CloseShopBut.Position = UDim2.new(0.894736826, 0, 0, 0)
+CloseShopBut.Size = UDim2.new(0, 17, 0, 16)
+CloseShopBut.Font = Enum.Font.SourceSans
+CloseShopBut.Text = "X"
+CloseShopBut.TextColor3 = Color3.fromRGB(138, 138, 255)
+CloseShopBut.TextSize = 14.000
+CloseShopBut.MouseButton1Click:Connect(function()
+	PB2ShopGui.Visible = false
+end)
+
+LoadGui.Name = "LoadGui"
+LoadGui.Parent = Sleepyhub
+LoadGui.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+LoadGui.BackgroundTransparency = 1.000
+LoadGui.Position = UDim2.new(0.357316077, 0, 0.314438492, 0)
+LoadGui.Size = UDim2.new(0, 372, 0, 249)
+LoadGui.ZIndex = 3
+
+LoadGuiBackground.Name = "LoadGuiBackground"
+LoadGuiBackground.Parent = LoadGui
+LoadGuiBackground.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+LoadGuiBackground.BackgroundTransparency = 1.000
+LoadGuiBackground.Size = UDim2.new(0, 372, 0, 249)
+LoadGuiBackground.Image = "rbxassetid://3570695787"
+LoadGuiBackground.ImageColor3 = Color3.fromRGB(45, 45, 45)
+LoadGuiBackground.ScaleType = Enum.ScaleType.Slice
+LoadGuiBackground.SliceCenter = Rect.new(100, 100, 100, 100)
+LoadGuiBackground.SliceScale = 0.130
+
+LoadGUITitle.Name = "LoadGUITitle"
+LoadGUITitle.Parent = LoadGui
+LoadGUITitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+LoadGUITitle.BackgroundTransparency = 1.000
+LoadGUITitle.Position = UDim2.new(0.0806451589, 0, 0.0803212821, 0)
+LoadGUITitle.Size = UDim2.new(0, 312, 0, 45)
+LoadGUITitle.ZIndex = 2
+LoadGUITitle.Font = Enum.Font.Michroma
+LoadGUITitle.Text = "SleepyHub"
+LoadGUITitle.TextColor3 = Color3.fromRGB(138, 138, 255)
+LoadGUITitle.TextSize = 51.000
+
+LoadGUIKeyBox.Name = "LoadGUIKeyBox"
+LoadGUIKeyBox.Parent = LoadGui
+LoadGUIKeyBox.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+LoadGUIKeyBox.BackgroundTransparency = 1.000
+LoadGUIKeyBox.BorderSizePixel = 0
+LoadGUIKeyBox.Position = UDim2.new(0.177419364, 0, 0.397590369, 0)
+LoadGUIKeyBox.Size = UDim2.new(0, 240, 0, 50)
+LoadGUIKeyBox.ZIndex = 2
+LoadGUIKeyBox.Font = Enum.Font.SourceSans
+LoadGUIKeyBox.Text = ""
+LoadGUIKeyBox.TextColor3 = Color3.fromRGB(0, 0, 0)
+LoadGUIKeyBox.TextSize = 14.000
+
+TextBox_Roundify_13px.Name = "TextBox_Roundify_13px"
+TextBox_Roundify_13px.Parent = LoadGUIKeyBox
+TextBox_Roundify_13px.Active = true
+TextBox_Roundify_13px.AnchorPoint = Vector2.new(0.5, 0.5)
+TextBox_Roundify_13px.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextBox_Roundify_13px.BackgroundTransparency = 1.000
+TextBox_Roundify_13px.Position = UDim2.new(0.5, 0, 0.5, 0)
+TextBox_Roundify_13px.Selectable = true
+TextBox_Roundify_13px.Size = UDim2.new(1, 0, 1, 0)
+TextBox_Roundify_13px.Image = "rbxassetid://3570695787"
+TextBox_Roundify_13px.ImageColor3 = Color3.fromRGB(66, 66, 66)
+TextBox_Roundify_13px.ScaleType = Enum.ScaleType.Slice
+TextBox_Roundify_13px.SliceCenter = Rect.new(100, 100, 100, 100)
+TextBox_Roundify_13px.SliceScale = 0.130
+
+InputKey.Name = "InputKey"
+InputKey.Parent = LoadGui
+InputKey.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+InputKey.BackgroundTransparency = 1.000
+InputKey.BorderSizePixel = 0
+InputKey.Position = UDim2.new(0.231182799, 0, 0.658634543, 0)
+InputKey.Size = UDim2.new(0, 200, 0, 50)
+InputKey.Font = Enum.Font.SourceSans
+InputKey.Text = "Check Key"
+InputKey.TextColor3 = Color3.fromRGB(138, 138, 255)
+InputKey.TextSize = 39.000
+InputKey.ZIndex = 1
+InputKey.MouseButton1Click:Connect(function()
+    if LoadGUIKeyBox.text == "ScriptingIsGay!" then
+        LoadGui.Visible = false
+        Main.Visible = true
+        else do
+            InputKey.Text = "Incorrect key!"
+            wait(2)
+            InputKey.Text = "Check Key"
+        end
+    end
+end)
+
+TextButton_Roundify_13px.Name = "TextButton_Roundify_13px"
+TextButton_Roundify_13px.Parent = InputKey
+TextButton_Roundify_13px.Active = true
+TextButton_Roundify_13px.AnchorPoint = Vector2.new(0.5, 0.5)
+TextButton_Roundify_13px.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+TextButton_Roundify_13px.BackgroundTransparency = 1.000
+TextButton_Roundify_13px.Position = UDim2.new(0.5, 0, 0.5, 0)
+TextButton_Roundify_13px.Selectable = true
+TextButton_Roundify_13px.Size = UDim2.new(1, 0, 1, 0)
+TextButton_Roundify_13px.Image = "rbxassetid://3570695787"
+TextButton_Roundify_13px.ImageColor3 = Color3.fromRGB(66, 66, 66)
+TextButton_Roundify_13px.ScaleType = Enum.ScaleType.Slice
+TextButton_Roundify_13px.SliceCenter = Rect.new(100, 100, 100, 100)
+TextButton_Roundify_13px.SliceScale = 0.130
+TextButton_Roundify_13px.ZIndex = 2
+
+CodeLink.Name = "Discord Link"
+CodeLink.Parent = LoadGui
+CodeLink.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+CodeLink.BackgroundTransparency = 1.000
+CodeLink.Position = UDim2.new(0.111842185, 0, 0.898322701, 0)
+CodeLink.Size = UDim2.new(0, 288, 0, 16)
+CodeLink.Font = Enum.Font.SourceSans
+CodeLink.Text = "sleepyhub.tk - Find the code here"
+CodeLink.TextColor3 = Color3.fromRGB(138, 138, 255)
+CodeLink.TextSize = 14.000
+
+Minimized.Name = "Minimized"
+Minimized.Parent = Sleepyhub
+Minimized.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Minimized.BackgroundTransparency = 1.000
+Minimized.Position = UDim2.new(0.334983498, 0, -0.0267379694, 0)
+Minimized.Size = UDim2.new(0, 363, 0, 45)
+Minimized.Visible = false
+
+MinimizedBackground.Name = "MinimizedBackground"
+MinimizedBackground.Parent = Minimized
+MinimizedBackground.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+MinimizedBackground.BackgroundTransparency = 1.000
+MinimizedBackground.Position = UDim2.new(0, 0, -0.152899638, 0)
+MinimizedBackground.Size = UDim2.new(0, 363, 0, 51)
+MinimizedBackground.Image = "rbxassetid://3570695787"
+MinimizedBackground.ImageColor3 = Color3.fromRGB(45, 45, 45)
+MinimizedBackground.ScaleType = Enum.ScaleType.Slice
+MinimizedBackground.SliceCenter = Rect.new(100, 100, 100, 100)
+MinimizedBackground.SliceScale = 0.130
+
+MaximizeWindow.Name = "Maximize Window"
+MaximizeWindow.Parent = Minimized
+MaximizeWindow.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+MaximizeWindow.BackgroundTransparency = 1.000
+MaximizeWindow.Position = UDim2.new(0.0440771356, 0, 0.555555582, 0)
+MaximizeWindow.Size = UDim2.new(0, 333, 0, 19)
+MaximizeWindow.Font = Enum.Font.SourceSans
+MaximizeWindow.Text = "V      V      V"
+MaximizeWindow.TextColor3 = Color3.fromRGB(138, 138, 255)
+MaximizeWindow.TextSize = 14.000
+MaximizeWindow.MouseButton1Click:Connect(function()
+    Main.Visible = true
+    Minimized.Visible = false
+end)
+
+PB2FarmGui.Name = "PB2FarmGui"
+PB2FarmGui.Parent = Sleepyhub
+PB2FarmGui.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+PB2FarmGui.Position = UDim2.new(0.827415347, 0, 0.150920257, 0)
+PB2FarmGui.Size = UDim2.new(0, 209, 0, 568)
+PB2FarmGui.Visible = false
+
+PB2FarmGUItopbar.Name = "PB2FarmGUItopbar"
+PB2FarmGUItopbar.Parent = PB2FarmGui
+PB2FarmGUItopbar.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+PB2FarmGUItopbar.Size = UDim2.new(0, 209, 0, 57)
+PB2FarmGUItopbar.ZIndex = 2
+
+FarmGUITitle.Name = "FarmGUITitle"
+FarmGUITitle.Parent = PB2FarmGUItopbar
+FarmGUITitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+FarmGUITitle.BackgroundTransparency = 1.000
+FarmGUITitle.Position = UDim2.new(0, 0, -0.0350877196, 0)
+FarmGUITitle.Size = UDim2.new(0, 209, 0, 59)
+FarmGUITitle.ZIndex = 3
+FarmGUITitle.Font = Enum.Font.SourceSans
+FarmGUITitle.Text = "Project Baki Farm"
+FarmGUITitle.TextColor3 = Color3.fromRGB(138, 138, 255)
+FarmGUITitle.TextSize = 31.000
+
+CloseFarmBut.Name = "CloseFarmBut"
+CloseFarmBut.Parent = PB2FarmGUItopbar
+CloseFarmBut.BackgroundColor3 = Color3.fromRGB(66, 66, 66)
+CloseFarmBut.Position = UDim2.new(0.894736826, 0, 0, 0)
+CloseFarmBut.Size = UDim2.new(0, 17, 0, 16)
+CloseFarmBut.ZIndex = 3
+CloseFarmBut.Font = Enum.Font.SourceSans
+CloseFarmBut.Text = "X"
+CloseFarmBut.TextColor3 = Color3.fromRGB(138, 138, 255)
+CloseFarmBut.TextSize = 14.000
+CloseFarmBut.MouseButton1Click:Connect(function()
+    PB2FarmGui.Visible = false
+end)
+
+PB2FarmGUImain.Name = "PB2FarmGUImain"
+PB2FarmGUImain.Parent = PB2FarmGui
+PB2FarmGUImain.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+PB2FarmGUImain.BorderColor3 = Color3.fromRGB(138, 138, 255)
+PB2FarmGUImain.BorderSizePixel = 2
+PB2FarmGUImain.Size = UDim2.new(0, 209, 0, 568)
+
+YashaFarmOn.Name = "YashaFarmOn"
+YashaFarmOn.Parent = PB2FarmGUImain
+YashaFarmOn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+YashaFarmOn.BorderColor3 = Color3.fromRGB(138, 138, 255)
+YashaFarmOn.Position = UDim2.new(0.0191387553, 0, 0.158450693, 0)
+YashaFarmOn.Size = UDim2.new(0, 90, 0, 20)
+YashaFarmOn.Font = Enum.Font.SourceSans
+YashaFarmOn.Text = "On"
+YashaFarmOn.TextColor3 = Color3.fromRGB(138, 138, 255)
+YashaFarmOn.TextSize = 14.000
+YashaFarmOn.MouseButton1Click:Connect(function()
+    getgenv().YashaApeFarm = true
+    doYasha()
+end)
+
+YashaFarmOff.Name = "YashaFarmOff"
+YashaFarmOff.Parent = PB2FarmGUImain
+YashaFarmOff.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+YashaFarmOff.BorderColor3 = Color3.fromRGB(138, 138, 255)
+YashaFarmOff.Position = UDim2.new(0.545454562, 0, 0.158450693, 0)
+YashaFarmOff.Size = UDim2.new(0, 90, 0, 20)
+YashaFarmOff.Font = Enum.Font.SourceSans
+YashaFarmOff.Text = "Off"
+YashaFarmOff.TextColor3 = Color3.fromRGB(138, 138, 255)
+YashaFarmOff.TextSize = 14.000
+YashaFarmOff.MouseButton1Click:Connect(function()
+    getgenv().YashaApeFarm = false
+end)
+
+
+KatoFarmOn.Name = "KatoFarmOn"
+KatoFarmOn.Parent = PB2FarmGUImain
+KatoFarmOn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+KatoFarmOn.BorderColor3 = Color3.fromRGB(138, 138, 255)
+KatoFarmOn.Position = UDim2.new(0.0191387553, 0, 0.272887319, 0)
+KatoFarmOn.Size = UDim2.new(0, 90, 0, 20)
+KatoFarmOn.Font = Enum.Font.SourceSans
+KatoFarmOn.Text = "On"
+KatoFarmOn.TextColor3 = Color3.fromRGB(138, 138, 255)
+KatoFarmOn.TextSize = 14.000
+KatoFarmOn.MouseButton1Click:Connect(function()
+    getgenv().KiyosumiKatoFarm = true
+        if getgenv().KiyosumiKatoFarm == true then
+        doKato()
+        end
+end)
+
+KatoFarmOff.Name = "KatoFarmOff"
+KatoFarmOff.Parent = PB2FarmGUImain
+KatoFarmOff.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+KatoFarmOff.BorderColor3 = Color3.fromRGB(138, 138, 255)
+KatoFarmOff.Position = UDim2.new(0.545454562, 0, 0.272887319, 0)
+KatoFarmOff.Size = UDim2.new(0, 90, 0, 20)
+KatoFarmOff.Font = Enum.Font.SourceSans
+KatoFarmOff.Text = "Off"
+KatoFarmOff.TextColor3 = Color3.fromRGB(138, 138, 255)
+KatoFarmOff.TextSize = 14.000
+KatoFarmOff.MouseButton1Click:Connect(function()
+    getgenv().KiyosumiKatoFarm = false
+end)
+
+KatoFarmLabel.Name = "KatoFarmLabel"
+KatoFarmLabel.Parent = PB2FarmGUImain
+KatoFarmLabel.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+KatoFarmLabel.BackgroundTransparency = 1.000
+KatoFarmLabel.BorderColor3 = Color3.fromRGB(138, 138, 255)
+KatoFarmLabel.Position = UDim2.new(0.244019136, 0, 0.227112681, 0)
+KatoFarmLabel.Size = UDim2.new(0, 107, 0, 17)
+KatoFarmLabel.Font = Enum.Font.SourceSans
+KatoFarmLabel.Text = "Kiyosumi Kato"
+KatoFarmLabel.TextColor3 = Color3.fromRGB(138, 138, 255)
+KatoFarmLabel.TextSize = 14.000
+
+ThugFarmOn.Name = "ThugFarmOn"
+ThugFarmOn.Parent = PB2FarmGUImain
+ThugFarmOn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+ThugFarmOn.BorderColor3 = Color3.fromRGB(138, 138, 255)
+ThugFarmOn.Position = UDim2.new(0.0191387553, 0, 0.387323946, 0)
+ThugFarmOn.Size = UDim2.new(0, 90, 0, 20)
+ThugFarmOn.Font = Enum.Font.SourceSans
+ThugFarmOn.Text = "On"
+ThugFarmOn.TextColor3 = Color3.fromRGB(138, 138, 255)
+ThugFarmOn.TextSize = 14.000
+ThugFarmOn.MouseButton1Click:Connect(function()
+    getgenv().StreetThugFarm = true
+    doSThug()
+end)
+
+ThugFarmOff.Name = "ThugFarmOff"
+ThugFarmOff.Parent = PB2FarmGUImain
+ThugFarmOff.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+ThugFarmOff.BorderColor3 = Color3.fromRGB(138, 138, 255)
+ThugFarmOff.Position = UDim2.new(0.545454562, 0, 0.387323946, 0)
+ThugFarmOff.Size = UDim2.new(0, 90, 0, 20)
+ThugFarmOff.Font = Enum.Font.SourceSans
+ThugFarmOff.Text = "Off"
+ThugFarmOff.TextColor3 = Color3.fromRGB(138, 138, 255)
+ThugFarmOff.TextSize = 14.000
+ThugFarmOff.MouseButton1Click:Connect(function()
+    getgenv().StreetThugFarm = false
+end)
+
+YashaFarmLabel.Name = "YashaFarmLabel"
+YashaFarmLabel.Parent = PB2FarmGUImain
+YashaFarmLabel.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+YashaFarmLabel.BackgroundTransparency = 1.000
+YashaFarmLabel.Position = UDim2.new(0.282296658, 0, 0.110915489, 0)
+YashaFarmLabel.Size = UDim2.new(0, 90, 0, 17)
+YashaFarmLabel.Font = Enum.Font.SourceSans
+YashaFarmLabel.Text = "Yasha Farm"
+YashaFarmLabel.TextColor3 = Color3.fromRGB(138, 138, 255)
+YashaFarmLabel.TextSize = 14.000
+
+ThugFarmLabel.Name = "ThugFarmLabel"
+ThugFarmLabel.Parent = PB2FarmGUImain
+ThugFarmLabel.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+ThugFarmLabel.BackgroundTransparency = 1.000
+ThugFarmLabel.BorderColor3 = Color3.fromRGB(138, 138, 255)
+ThugFarmLabel.Position = UDim2.new(0.244019136, 0, 0.33626762, 0)
+ThugFarmLabel.Size = UDim2.new(0, 107, 0, 17)
+ThugFarmLabel.Font = Enum.Font.SourceSans
+ThugFarmLabel.Text = "Street Thug Farm"
+ThugFarmLabel.TextColor3 = Color3.fromRGB(138, 138, 255)
+ThugFarmLabel.TextSize = 14.000
